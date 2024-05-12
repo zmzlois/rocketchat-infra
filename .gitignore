@@ -1,1 +1,5 @@
 variables.tf
+
+config.yml
+
+.terraform

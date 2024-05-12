@@ -1,15 +1,4 @@
-provider "kubernetes" {
-  config_path    = var.config_path
-  config_context = var.config_context
-}
 
-provider "helm" {
-  kubernetes {
-
-    config_path    = var.config_path
-    config_context = var.config_context
-  }
-}
 
 variable "hosts" {
   type = list(string)
@@ -18,6 +7,7 @@ variable "hosts" {
 resource "kubernetes_namespace" "this" {
   metadata {
     name = "minio"
+
   }
 }
 
@@ -30,7 +20,8 @@ resource "helm_release" "minio" {
     ingress = {
       enabled = true
       annotations = {
-        "cert-manager.io/cluster-issuer" = "cert-manager"
+        "kuberentes.io/ingress-class"    = "traefik"
+        "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
       }
       hosts = [for host in var.hosts : {
         host  = host
