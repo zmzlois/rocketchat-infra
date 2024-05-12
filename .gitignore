@@ -3,3 +3,5 @@ variables.tf
 config.yml
 
 .terraform
+.terraform/*
+.terraform.lock.hcl
